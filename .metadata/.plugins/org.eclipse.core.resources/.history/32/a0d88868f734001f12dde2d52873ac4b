@@ -1,0 +1,54 @@
+package com.amazon.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.amazon.dao.AmcDao;
+import com.amazon.entity.Availableproduct;
+import com.amazon.entity.Buy;
+import com.amazon.entity.Cart;
+
+@Service
+public class AmcService {
+
+	@Autowired
+	private AmcDao amcDao;
+
+	public Buy buyProduct(String email, Buy buy) {
+		return amcDao.buyProduct(email, buy);
+	}
+
+	public Cart addProductToCart(String email, Cart cart) {
+		return amcDao.addProductToCart(cart);
+	}
+	public List<Cart> viewProductCart(String email) {
+		return amcDao.viewProductCart(email);
+	}
+
+	public Cart viewProductCartById(String email, Integer productid) {
+		return amcDao.viewProductCartById(email, productid);
+	}
+
+
+
+	public List<Buy> viewOrders(String email) {
+		return amcDao.viewOrders(email);
+	}
+
+	public List<Availableproduct> viewProductsByCategory(String category) {
+		return amcDao.viewProductsByCategory(category);
+	}
+
+	public Boolean delBuyProductsById(Integer productid) {
+		return amcDao.delBuyProductsById(productid);
+	}
+
+	public Boolean delCartProductsById(Integer productid) {
+		return amcDao.delCartProductsById(productid);
+	}
+	public List<Availableproduct> allProduct() {
+		return amcDao.allProduct();
+	}
+}

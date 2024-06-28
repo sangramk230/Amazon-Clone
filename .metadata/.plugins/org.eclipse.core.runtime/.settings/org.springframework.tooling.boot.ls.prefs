@@ -1,0 +1,5 @@
+boot-java.change-detection.on=true
+boot-java.scan-java-test-sources=true
+boot-java.support-spring-xml-config.on=true
+boot-java.support-spring-xml-config.scan-folders-globs=src/main/resources
+eclipse.preferences.version=1

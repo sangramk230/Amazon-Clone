@@ -1,0 +1,30 @@
+package com.amazon.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class Buy {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long productid;
+	private Integer userid;
+	private Long cartid;
+	private String email;
+	private String name;
+	private String brand;
+	private Double price;
+	private String category;
+	private String address;
+	private Long contact;
+	private Integer quantity;
+	private String image;
+
+	public Buy() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+}

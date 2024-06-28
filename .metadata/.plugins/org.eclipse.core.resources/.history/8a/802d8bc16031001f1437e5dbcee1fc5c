@@ -1,0 +1,29 @@
+package com.amazon.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.amazon.dao.LoginDao;
+
+import jakarta.servlet.http.HttpSession;
+
+@Service
+public class LoginService {
+	
+@Autowired
+static HttpSession httpSession;
+
+@Autowired
+private LoginDao loginDao;
+
+public boolean loginUser(String email, String password) {
+	User user = daoMethods.getUserByEmail(email);
+	return user != null && user.getPassword().equals(password);
+}
+
+public List<User> profile(Object email) {
+	return daoMethods.profile(email);
+}
+
+
+}

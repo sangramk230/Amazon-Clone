@@ -1,0 +1,35 @@
+<div class="container-fluid my-orders text-center bg-white text-black py-3">
+    <h3 class="text-center mb-4">Electronics</h3>
+    <table class="table table-bordered">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Product Image</th>
+          <th scope="col">Product Name</th>
+          <th scope="col">Brand</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Status</th>
+          <th scope="col">Cancel Order</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>
+            <img [src]="product.image" class="img-fluid" alt="{{ product.name }}">
+          </td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.brand }}</td>
+          <td>{{ product.price | currency:'INR' }}</td>
+          <td>{{ product.quantity }}</td>
+
+          <td>In Progress</td>
+
+          <td>
+            <button type="button" class="btn btn-primary" (click)="deleteOrder(product.productid)">Cancel Order</button>
+          </td>
+        </tr>
+        <!-- Repeat <tr> for each product item -->
+      </tbody>
+    </table>
+  </div>
+  

@@ -1,0 +1,36 @@
+package com.amazon.dao;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.amazon.entity.AvailableProduct;
+
+@Repository
+public class UserAvailableProductService {
+
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	public boolean saveUserProduct(AvailableProduct userProduct) {
+		try (Session session = sessionFactory.openSession()) {
+			session.beginTransaction();
+			session.save(userProduct);
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public UserProduct getUserProduct(Long id) {
+		try (Session session = sessionFactory.openSession()) {
+			return session.get(UserProduct.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+}

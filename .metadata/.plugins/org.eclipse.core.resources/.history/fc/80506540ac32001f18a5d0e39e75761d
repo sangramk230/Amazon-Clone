@@ -1,0 +1,25 @@
+package com.amazon.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.amazon.dao.UserAvailableProductDao;
+
+
+@Service
+public class UserAvailableProductService {
+
+	@Autowired
+	private UserAvailableProductDao userAvailableProductDao;
+
+	@Transactional
+	public boolean saveUserProduct(UserProduct userProduct) {
+		return userProductDao.saveUserProduct(userProduct);
+	}
+
+	@Transactional(readOnly = true)
+	public UserProduct getUserProduct(Long id) {
+		return userProductDao.getUserProduct(id);
+	}
+}

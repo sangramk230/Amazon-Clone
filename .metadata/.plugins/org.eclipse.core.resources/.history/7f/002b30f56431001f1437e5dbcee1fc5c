@@ -1,0 +1,42 @@
+package com.amazon.service;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.amazon.dao.LoginDao;
+import com.amazon.entity.User;
+
+@Service
+public class LoginService {
+
+    @Autowired
+    private LoginDao loginDao;
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    public boolean signUp(User user) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.persist(user);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean loginUser(String email, String password) {
+        User user = loginDao.getUserByEmail(email);
+        return user != null && user.getPassword().equals(password);
+    }
+
+    public List<User> profile(String email) {
+        return loginDao.profile(email);
+    }
+}

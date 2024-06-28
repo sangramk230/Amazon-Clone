@@ -1,0 +1,91 @@
+<nav>
+  <ul class="nav" style="margin-top: 60px;">
+    <li class="nav-item">
+      <a class="nav-link" (click)="category('Electronic')">Electronics</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="category('Clothing')">Clothing</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="category('Accessories')">Accessories</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="profile()">Profile</a>
+    </li>
+  </ul>
+</nav>
+
+
+<main class="py-1"> 
+  <div *ngIf="!first && !second">  
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+      <ul class="carousel-indicators">
+        <button data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></button>
+        <button data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
+      </ul>
+      <div class="carousel-inner" >
+        <div class="carousel-item active" data-bs-interval="3000">
+          <a ><img src="/img/home/slide1.jpg" class="d-block w-100" alt="First Slide"></a>
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+          <a ><img src="/img/home/slide3.jpg" class="d-block w-100" alt="Second Slide"></a>
+        </div>
+      </div>     
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <div class="container">
+      <div id="electronics" class="container-fluid bg-white text-black py-3">
+        <div class="row">
+          <h4 class="text-primary text-black text-center">{{mesg}}</h4>
+          <div class="col-md-3 mb-4" *ngFor="let product of products">
+            <div class="card h-100">
+              <input type="number" hidden [(ngModel)]="product.productid" [value]="product.productid">
+              <img [src]="product.image" class="card-img-top" alt="{{ product.name }}">
+              <div class="card-body d-flex flex-column">
+                <h6 class="card-title">{{ product.name }}</h6>
+                <p class="card-text">Brand: {{ product.brand }}</p>
+                <p class="card-text">{{ product.price | currency:'INR' }}</p>
+                <div class="mt-auto d-grid gap-2">
+                  <button type="button" class="btn btn-primary" (click)="addCart(product)">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   
+  <div class="container mt-4" *ngIf="second">
+    <div class="row justify-content-center" *ngFor="let userSession of user">
+      <div class="col-md-8">
+        <div class="card shadow p-3 mb-5 bg-white rounded">
+          <div class="card-body">
+            <h3 class="card-title text-center mb-4">User Profile</h3>
+            <div class="row">
+              <div class="col">
+                <ul class="list-group list-group-flush text-center">
+                  <li class="list-group-item"><strong>ID:</strong> {{ userSession.id }}</li>
+                  <li class="list-group-item"><strong>Name:</strong> {{ userSession.name }}</li>
+                  <li class="list-group-item"><strong>Gender:</strong> {{ userSession.gender }}</li>
+                  <li class="list-group-item"><strong>Date of Birth:</strong> {{ userSession.dob }}</li>
+                  <li class="list-group-item"><strong>Email:</strong> {{ userSession.email }}</li>
+                  <li class="list-group-item"><strong>Phone:</strong> {{ userSession.phoneno }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</main>
