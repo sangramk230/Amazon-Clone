@@ -1,0 +1,14 @@
+# Spring Boot specific
+/target/
+/build/
+
+
+# Angular specific
+/node_modules/
+/dist/
+/e2e/
+
+# IDE/Editor specific
+.idea/
+.vscode/
+
