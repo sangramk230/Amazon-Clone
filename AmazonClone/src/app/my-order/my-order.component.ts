@@ -23,7 +23,6 @@ export class MyOrderComponent {
       this.productService.viewOrders().subscribe(
         (orders: Product[]) => {
           this.products = orders;
-          console.log('Orders:', this.products);
         },
         error => {
           console.error('Error fetching orders:', error);
