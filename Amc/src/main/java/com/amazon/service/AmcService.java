@@ -44,8 +44,6 @@ public class AmcService {
 		return amcDao.viewProductCartById(useremail, productid);
 	}
 
-
-
 	public List<Buy> viewOrders(String useremail) {
 		return amcDao.viewOrders(useremail);
 	}
@@ -63,5 +61,9 @@ public class AmcService {
 	}
 	public List<Availableproduct> allProduct() {
 		return amcDao.allProduct();
+	}
+
+	public List<Availableproduct> search(String name) {
+		return amcDao.search(name);
 	}
 }

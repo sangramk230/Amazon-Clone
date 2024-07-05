@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {  FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../product.service';
@@ -8,11 +8,11 @@ import { User, UserService } from '../user.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent  {
+export class LoginComponent {
   signupDiv: boolean = false;
   loginDiv: boolean = true;
   user: User = new User(0, '', '', '', '', '', '', '');
@@ -45,18 +45,17 @@ export class LoginComponent  {
 
   login(): void {
     this.userService.loginUser(this.user.email, this.user.password).subscribe(
-      (next) => {
+      next => {
         if (next) {
           alert('Login successful!');
           this.router.navigateByUrl('home');
         } else {
-          alert('Login failed. Please try again.');
+          alert('Wrong Details. Please try again.');
         }
       },
       error => {
-        alert('Login failed. Please try again.');
+        alert('Wrong Details. Please try again.');
       }
     );
   }
-
 }

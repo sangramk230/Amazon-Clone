@@ -2,7 +2,6 @@ package com.amazon.service;
 
 import java.util.List;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,15 +19,7 @@ public class LoginService {
 	private SessionFactory sessionFactory;
 
 	public boolean signUp(User user) {
-		try (Session session = sessionFactory.openSession()) {
-			session.beginTransaction();
-			session.persist(user);
-			session.getTransaction().commit();
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
+		return loginDao.signUp(user);
 	}
 
 	public boolean loginUser(String email, String password) {

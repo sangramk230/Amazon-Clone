@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { UserService } from './user.service';
+import { Product, ProductService } from './product.service';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +13,7 @@ import { UserService } from './user.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-
   constructor(private router: Router) { }
-
-
-
   loadOrders(): void {
     this.router.navigate(['/my-order']);
   }

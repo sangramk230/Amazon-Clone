@@ -3,6 +3,9 @@ border: none;
 }
 img.card-img-top{
     align-self: center;
-    height: 200px;
-    width: 210px;
+    height: 160px;
+    width: 180px;
+}
+.card-body d-flex flex-column ,h6,p{
+    font-size: 14px;
 }

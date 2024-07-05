@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'AmazonClone' title`, () => {
+  it(`should have the 'Amazon Clone' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('AmazonClone');
+    expect(app.title).toEqual('Amazon Clone');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, AmazonClone');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, Amazon Clone');
   });
 });

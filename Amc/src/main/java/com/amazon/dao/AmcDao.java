@@ -13,7 +13,6 @@ import com.amazon.entity.Availableproduct;
 import com.amazon.entity.Buy;
 import com.amazon.entity.Cart;
 
-
 @Repository
 public class AmcDao {
 
@@ -23,7 +22,7 @@ public class AmcDao {
 	public Long getAvailableIdForProduct(Long productid) {
 		try (Session session = sessionFactory.openSession()) {
 			Query<Long> query = session.createQuery(
-					"SELECT ap.productid FROM Availableproduct ap WHERE ap.productid = :productid");
+					"SELECT ap.productid FROM Availableproduct ap WHERE ap.productid = :productid", Long.class);
 			query.setParameter("productid", productid);
 			return query.uniqueResult();
 		} catch (Exception e) {
@@ -33,37 +32,44 @@ public class AmcDao {
 	}
 
 	public Buy buyProduct(Buy buy) {
+		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
-			session.beginTransaction();
+			transaction = session.beginTransaction();
 			session.save(buy);
-			session.getTransaction().commit();
+			transaction.commit();
 			return buy;
 		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
 			e.printStackTrace();
 			return null;
 		}
 	}
 
 	public Cart addProductToCart(Cart cart) {
+		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
-			session.beginTransaction();
+			transaction = session.beginTransaction();
 			session.save(cart);
-			session.getTransaction().commit();
+			transaction.commit();
 			return cart;
 		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
 			e.printStackTrace();
 			return null;
 		}
 	}
 
 	public boolean isProductInCart(String email, Long productid) {
-
 		try (Session session = sessionFactory.openSession()) {
-			Query query = session
-					.createQuery("SELECT COUNT(*) FROM Cart WHERE email = :email AND productid = :productid");
+			Query<Long> query = session.createQuery(
+					"SELECT COUNT(*) FROM Cart WHERE email = :email AND productid = :productid", Long.class);
 			query.setParameter("email", email);
 			query.setParameter("productid", productid);
-			Long count = (Long) query.uniqueResult();
+			Long count = query.uniqueResult();
 			return count != null && count > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,8 +79,7 @@ public class AmcDao {
 
 	public List<Cart> viewProductCart(String useremail) {
 		try (Session session = sessionFactory.openSession()) {
-			Query<Cart> query = session
-					.createQuery("FROM Cart WHERE useremail = :useremail ", Cart.class);
+			Query<Cart> query = session.createQuery("FROM Cart WHERE useremail = :useremail", Cart.class);
 			query.setParameter("useremail", useremail);
 			return query.list();
 		} catch (Exception e) {
@@ -86,11 +91,9 @@ public class AmcDao {
 	public Cart viewProductCartById(String useremail, Integer productid) {
 		try (Session session = sessionFactory.openSession()) {
 			Query<Cart> query = session
-					.createQuery("FROM Cart c WHERE c.useremail = :useremail AND c.productid = :productid",
-					Cart.class);
+					.createQuery("FROM Cart c WHERE c.useremail = :useremail AND c.productid = :productid", Cart.class);
 			query.setParameter("useremail", useremail);
 			query.setParameter("productid", productid);
-
 			return query.uniqueResult();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -100,8 +103,7 @@ public class AmcDao {
 
 	public List<Buy> viewOrders(String useremail) {
 		try (Session session = sessionFactory.openSession()) {
-			Query<Buy> query = session
-					.createQuery("FROM Buy p WHERE p.useremail = :useremail", Buy.class);
+			Query<Buy> query = session.createQuery("FROM Buy p WHERE p.useremail = :useremail", Buy.class);
 			query.setParameter("useremail", useremail);
 			return query.list();
 		} catch (Exception e) {
@@ -112,9 +114,8 @@ public class AmcDao {
 
 	public List<Availableproduct> viewProductsByCategory(String category) {
 		try (Session session = sessionFactory.openSession()) {
-			Query query = session.createQuery("FROM Availableproduct a WHERE a.category = :category",
+			Query<Availableproduct> query = session.createQuery("FROM Availableproduct a WHERE a.category = :category",
 					Availableproduct.class);
-			System.out.println(query);
 			query.setParameter("category", category);
 			return query.list();
 		} catch (Exception e) {
@@ -128,7 +129,7 @@ public class AmcDao {
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
 			Query<?> query = session
-					.createQuery("DELETE FROM Buy a WHERE a.productid = :productid AND useremail=:useremail");
+					.createQuery("DELETE FROM Buy a WHERE a.productid = :productid AND a.useremail = :useremail");
 			query.setParameter("productid", productid);
 			query.setParameter("useremail", useremail);
 			int result = query.executeUpdate();
@@ -148,7 +149,7 @@ public class AmcDao {
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
 			Query<?> query = session
-					.createQuery("DELETE FROM Cart a WHERE a.productid = :productid AND useremail=: useremail");
+					.createQuery("DELETE FROM Cart a WHERE a.productid = :productid AND a.useremail = :useremail");
 			query.setParameter("productid", productid);
 			query.setParameter("useremail", useremail);
 			int result = query.executeUpdate();
@@ -164,9 +165,20 @@ public class AmcDao {
 	}
 
 	public List<Availableproduct> allProduct() {
-		try {
-			Session session = sessionFactory.openSession();
-			Query query = session.createQuery("from Availableproduct");
+		try (Session session = sessionFactory.openSession()) {
+			Query<Availableproduct> query = session.createQuery("FROM Availableproduct", Availableproduct.class);
+			return query.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public List<Availableproduct> search(String name) {
+		try (Session session = sessionFactory.openSession()) {
+			Query<Availableproduct> query = session.createQuery("FROM Availableproduct WHERE name LIKE :name",
+					Availableproduct.class);
+			query.setParameter("name", name + "%");
 			return query.list();
 		} catch (Exception e) {
 			e.printStackTrace();

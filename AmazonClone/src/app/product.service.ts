@@ -15,27 +15,30 @@ export class ProductService {
     return this.http.post<Product>(`http://localhost:8080/api/product/addToCart`,product); 
   }
 
-  viewProductsByCategory(category:string):Observable<any[]>{
-    return this.http.get<any[]>(`http://localhost:8080/api/product/viewProductsByCategory/${category}`); 
+  viewProductsByCategory(category:string):Observable<Product[]>{
+    return this.http.get<Product[]>(`http://localhost:8080/api/product/viewProductsByCategory/${category}`); 
   }
-  viewOrders():Observable<any[]>{
-    return this.http.get<any[]>(`http://localhost:8080/api/product/viewOrder`); 
+  viewOrders():Observable<Product[]>{
+    return this.http.get<Product[]>(`http://localhost:8080/api/product/viewOrder`); 
   }
-  viewProductCart():Observable<any[]>{
-    return this.http.get<any[]>(`http://localhost:8080/api/product/viewCart`); 
+  viewProductCart():Observable<Product[]>{
+    return this.http.get<Product[]>(`http://localhost:8080/api/product/viewCart`); 
   }
-  viewProductCartById(id:number):Observable<any[]>{
-    return this.http.get<any[]>(`http://localhost:8080/api/product/viewProductCartById/${id}`);
+  viewProductCartById(id:number):Observable<Product[]>{
+    return this.http.get<Product[]>(`http://localhost:8080/api/product/viewProductCartById/${id}`);
   } 
-  allProduct():Observable<any>{
-    return this.http.get<any>(`http://localhost:8080/api/product/allProduct`);
+  allProduct():Observable<Product[]>{
+    return this.http.get<Product[]>(`http://localhost:8080/api/product/allProduct`);
   }  
-  delBuyProductById(id:number):Observable<any>{
-    return this.http.delete<any>(`http://localhost:8080/api/product/delBuyProductsById/${id}`);
+  delBuyProductById(id:number):Observable<Product>{
+    return this.http.delete<Product>(`http://localhost:8080/api/product/delBuyProductsById/${id}`);
   } 
-  delCartProductById(id:number):Observable<any>{
-    return this.http.delete<any>(`http://localhost:8080/api/product/delCartProductsById/${id}`);
+  delCartProductById(id:number):Observable<Product>{
+    return this.http.delete<Product>(`http://localhost:8080/api/product/delCartProductsById/${id}`);
   } 
+  search(name:string):Observable<Product[]>{
+    return this.http.get<Product[]>(`http://localhost:8080/api/product/search/${name}`)
+  }
 
 }
 

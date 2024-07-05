@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Product, ProductService } from '../product.service';
@@ -8,15 +8,16 @@ import { UserService } from '../user.service';
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './cart.component.html',
-  styleUrl: './cart.component.css'
+  styleUrls: ['./cart.component.css']
 })
 export class CartComponent {
   products: Product[] = [];
-  selectedProduct: Product=new Product(0,'','','',0,'','',0,1,'');
+  selectedProduct: Product = new Product(0, '', '', '', 0, '', '', 0, 1, '');
   first: boolean = true;
   second: boolean = false;
+  totalPrice: number = 0;
 
   constructor(private router: Router, private productService: ProductService, private userService: UserService) {
     this.loadProductCart();
@@ -30,10 +31,12 @@ export class CartComponent {
         },
         error => {
           console.error('Error fetching product cart:', error);
+          alert('Please try again later.');
+          this.router.navigate(['/login']);
         }
       );
     } else {
-      alert('Please login first');
+      alert('Please try again later.');
       this.router.navigate(['/login']);
     }
   }
@@ -50,7 +53,7 @@ export class CartComponent {
         }
       );
     } else {
-      alert('Please login first');
+      alert('Please try again later.');
       this.router.navigate(['/login']);
     }
   }
@@ -59,28 +62,29 @@ export class CartComponent {
     this.selectedProduct = product;
     this.first = false;
     this.second = true;
+    this.calculateTotalPrice();
   }
 
   buyProduct(product: Product): void {
     if (this.userService.checkSession()) {
       this.productService.buyProduct(product).subscribe(
         () => {
-         alert('Product purchased successfully');
+          alert('Product purchased successfully');
           this.router.navigate(['/my-order']);
         },
         error => {
-          alert('Product not purchased');
+          alert('Please try again later.');
+          this.router.navigate(['/login']);
         }
       );
     } else {
-      alert('Please login first');
+      alert('Please try again later.');
       this.router.navigate(['/login']);
     }
   }
 
   calculateTotalPrice(): void {
-    if (this.selectedProduct.quantity && this.selectedProduct.price) {
-      this.selectedProduct.price = this.selectedProduct.quantity * this.selectedProduct.price;
-    }
+    this.totalPrice = this.selectedProduct.quantity * this.selectedProduct.price;
+    this.totalPrice = Math.max(this.totalPrice, 0);
   }
 }

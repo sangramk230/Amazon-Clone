@@ -1,9 +1,0 @@
-package com.amazon.service;
-
-import org.springframework.stereotype.Service;
-
-@Service
-public class LoginService {
-@auto
-
-}

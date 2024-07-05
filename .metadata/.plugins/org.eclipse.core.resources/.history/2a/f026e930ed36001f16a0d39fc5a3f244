@@ -1,0 +1,97 @@
+package com.amazon.entity;
+
+import java.sql.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "user")
+public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long phoneno;
+	private Integer userid;
+	private String name;
+	@Id
+	private String email;
+	private String gender;
+	private Date dob;
+	private String password;
+
+	public User() {
+		super();
+
+	}
+
+	public User(Long phoneno, Integer userid, String name, String email, String gender, Date dob, String password) {
+		super();
+		this.phoneno = phoneno;
+		this.userid = userid;
+		this.name = name;
+		this.email = email;
+		this.gender = gender;
+		this.dob = dob;
+		this.password = password;
+	}
+
+	public Long getPhoneno() {
+		return this.phoneno;
+	}
+
+	public void setPhoneno(Long phoneno) {
+		this.phoneno = phoneno;
+	}
+
+	public Integer getUserid() {
+		return this.userid;
+	}
+
+	public void setUserid(Integer userid) {
+		this.userid = userid;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getGender() {
+		return this.gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public Date getDob() {
+		return this.dob;
+	}
+
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+}

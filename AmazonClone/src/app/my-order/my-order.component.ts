@@ -27,7 +27,10 @@ export class MyOrderComponent {
         },
         error => {
           console.error('Error fetching orders:', error);
-          alert('Error fetching orders. Please try again later.');}
+          alert('Please try again later.');
+          this.router.navigate(['/login']);
+
+        }
       );
     } else {
       alert('Please login first');
@@ -44,7 +47,9 @@ export class MyOrderComponent {
         },
         error => {
           console.error('Error deleting order:', error);
-          alert('Error deleting order. Please try again later.');}
+          alert('Please try again later.');
+          this.router.navigate(['/login']);
+        }
       );
     } else {
       alert('Please login first');
